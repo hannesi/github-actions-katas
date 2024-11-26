@@ -2,7 +2,7 @@ name: Dev workflow
 on: 
   push:
     branches:
-      - 'dev/**'
+      - 'dev-**'
 env:
   docker_username: ${{ github.actor }}
   docker_password: ${{ secrets.GITHUB_TOKEN }}
