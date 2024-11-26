@@ -1,11 +1,8 @@
-name: Main workflow
+name: Dev workflow
 on: 
   push:
     branches:
-      - 'main'
-  pull_request:
-    branches:
-      - 'main'
+      - 'dev/**'
 env:
   docker_username: ${{ github.actor }}
   docker_password: ${{ secrets.GITHUB_TOKEN }}
@@ -54,27 +51,3 @@ jobs:
           path: .
       - name: Build docker
         run: bash ci/build-docker.sh
-      - name: Push docker
-        run: bash ci/push-docker.sh
-  Component-test:
-    runs-on: ubuntu-latest
-    needs: Docker-image
-    steps:
-    - name: Download code
-      uses: actions/download-artifact@v4
-      with:
-        name: code
-        path: .
-    - name: Execute component test
-      run: bash ci/component-test.sh
-  Performance-test:
-    runs-on: ubuntu-latest
-    needs: Docker-image
-    steps:
-    - name: Download code
-      uses: actions/download-artifact@v4
-      with:
-        name: code
-        path: .
-    - name: Execute performance test
-      run: bash ci/performance-test.sh
